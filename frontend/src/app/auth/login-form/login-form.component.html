@@ -1,0 +1,24 @@
+ <!-- Login form -->
+ <form [formGroup]="loginForm" (ngSubmit)="loginFormSubmit()" class="uk-form-horizontal uk-margin-large">
+
+    <div class="uk-margin">
+        <label class="uk-form-label" for="username">Email</label>
+        <div class="uk-form-controls">
+            <input formControlName="username" id="username" class="uk-input" type="email" placeholder="email">
+            <small class="uk-text-danger" *ngIf="loginForm.hasError('email', 'username')">Email is not valid.</small>
+
+        </div>
+    </div>
+
+    <div class="uk-margin">
+        <label class="uk-form-label" for="loginPassword">Password</label>
+        <div class="uk-form-controls">
+            <input formControlName="password" id="loginPassword" class="uk-input" type="password" placeholder="Password">
+        </div>
+    </div>
+
+    <div class="uk-modal-footer uk-text-right">
+        <button id="submitButton" type="submit" [disabled]="!loginForm.valid" class="uk-button add-btn">Login</button>
+    </div>
+
+</form>

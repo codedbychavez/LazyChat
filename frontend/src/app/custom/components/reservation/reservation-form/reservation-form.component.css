@@ -1,0 +1,13 @@
+#selectPersonList {
+
+}
+
+#selectPersonList:hover{
+    cursor: pointer;
+    color: #3EB489;
+}
+
+/* f */
+#personListCard {
+    overflow:scroll
+}

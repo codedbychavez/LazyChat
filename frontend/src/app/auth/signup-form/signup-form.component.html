@@ -1,0 +1,83 @@
+<!-- Sign-Up form -->
+<form [formGroup]="signupForm" (ngSubmit)="signupFormSubmit()" class="uk-form-horizontal uk-margin-large">
+
+    <div class="uk-margin">
+        <label class="uk-form-label" for="firstName">First Name</label>
+        <div class="uk-form-controls">
+            <input formControlName="firstName" name="firstName" class="uk-input" id="firstName" type="text" placeholder="First Name">
+            <small class="uk-text-danger" *ngIf="signupForm.hasError('required', 'firstName')">First Name is required.</small>
+        </div>
+        
+    </div>
+
+    <div class="uk-margin">
+        <label class="uk-form-label" for="lastName">Last Name</label>
+        <div class="uk-form-controls">
+            <input formControlName="lastName" name="lastName" class="uk-input" id="lastName" type="text" placeholder="First Name">
+            <small class="uk-text-danger" *ngIf="signupForm.hasError('required', 'lastName')">Last Name is required.</small>
+        
+        </div>
+    </div>
+
+    <div class="uk-margin">
+        <label class="uk-form-label" for="email">Email</label>
+        <div class="uk-form-controls">
+            <input formControlName="email" (keyup)="emailExistValidator($event)" name="email" class="uk-input" id="email" type="text" placeholder="email">
+            <small class="uk-text-danger" *ngIf="signupForm.hasError('required', 'email')">Email is required.</small>
+            <small class="uk-text-danger" *ngIf="signupForm.hasError('email', 'email')">Email is not valid.</small>
+            <small class="uk-text-danger" *ngIf="emailExistResult">Email is already taken.</small>
+
+
+        </div>
+    </div>
+
+                       
+    <div class="uk-margin">
+        <label class="uk-form-label" for="accountType">Account Type</label>
+        <div class="uk-form-controls">
+            <select formControlName="accountType" name="accountType" class="uk-select" id="accountType">
+                <option value="personal">Personal</option>
+                <option value="business">Business</option>
+            </select>
+            <small class="uk-text-danger" *ngIf="signupForm.hasError('required', 'accountType')">Please select an option.</small>
+
+        </div>
+    </div>
+
+    <div class="uk-margin">
+        <label class="uk-form-label" for="signUpPassword">Password</label>
+        <div class="uk-form-controls">
+            <input formControlName="password" name="password" class="uk-input" id="signUpPassword" type="password" placeholder="Password">
+
+            <small class="uk-text-danger" *ngIf="signupForm.hasError('passwordStrength', 'password')">
+                Let's be secure, your password should:
+                <ul>
+                    <li>Be atleast 6 characters long</li>
+                    <li>Be less than 16 characters long.</li>
+                    <li>Contain lowercase letters.</li>
+                    <li>Contain atlest 1 uppercase letter.</li>
+                    <li>Contain atleast 1 number.</li>
+                </ul>
+                
+            </small>
+
+        </div>
+
+        
+        
+    </div>
+
+    <div class="uk-margin">
+        <label class="uk-form-label" for="confirmPassword">Confirm Password</label>
+        <div class="uk-form-controls">
+            <input formControlName="confirmPassword" name="confirmPassword" class="uk-input" id="confirmPassword" type="password" placeholder="Confirm Password">
+            <small class="uk-text-danger" *ngIf="signupForm.hasError('mustMatch', 'confirmPassword')">Passwords does not match.</small>
+
+        </div>
+    </div>
+
+    <div class="uk-modal-footer uk-text-right">
+        <button type="submit" [disabled]="!signupForm.valid" id="submitButton" class="uk-button add-btn">Sign-Up</button>
+    </div>
+
+</form>
