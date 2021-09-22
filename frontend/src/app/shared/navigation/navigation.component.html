@@ -1,4 +1,4 @@
-<div *ngIf="showNavBar" id="navbar" uk-sticky="animation: uk-animation-slide-top; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; cls-inactive: uk-navbar-transparent uk-light; top: 200">
+<!-- <div *ngIf="showNavBar" id="navbar" uk-sticky="animation: uk-animation-slide-top; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; cls-inactive: uk-navbar-transparent uk-light; top: 200">
     <nav class="uk-navbar-container" uk-navbar>
         <div class="uk-navbar-left">
     
@@ -6,8 +6,6 @@
                 <li class="uk-active"><a href="#">Home</a></li>
                 <li class="uk-active"><a href="#">How it works <span uk-icon="icon: info"></span></a></li>
 
-                
-                <!-- <li><a href="#">Pricing</a></li> -->
             </ul>
     
         </div>
@@ -18,13 +16,11 @@
                     <a href="#"><span uk-icon="icon: user; ratio: 1.2"></span></a>
                     <div class="uk-navbar-dropdown">
                         <ul class="uk-nav uk-navbar-dropdown-nav">
-                            <!-- <li class="uk-active"><a href="#">Active</a></li> -->
+
                             <li><a href="#">Profile</a></li>
                             <li><a href="#">Calendar</a></li>
 
-                            <!-- <li class="uk-nav-header">Header</li>
-                            <li><a href="#">Item</a></li>
-                            <li><a href="#">Item</a></li> -->
+                      
                             <li class="uk-nav-divider"></li>
                             <li><a (click)="logOut()" class="uk-text-danger" href="#">Logout</a></li>
                         </ul>
@@ -33,4 +29,37 @@
             </ul>
         </div>
     </nav>
-</div>
+</div> -->
+
+
+<nav id="top-nav-bar" class="uk-navbar-container" uk-sticky>
+    <div uk-navbar>
+      <div class="uk-navbar-left">
+        <div class="uk-logo logo-bar uk-navbar-item">
+          <span class="fullsize">LazyChat</span>
+          <span class="minimised">LazyChat</span>
+        </div>
+    
+
+        <a href="#" class="uk-navbar-toggle" uk-navbar-toggle-icon uk-toggle="target: body; cls: sidebar-collapse"></a>
+      </div>
+      <div class="uk-navbar-right">
+        <ul class="uk-navbar-nav">
+            <li>
+                <a href="#"><span uk-icon="icon: user; ratio: 1.2"></span></a>
+                <div class="uk-navbar-dropdown">
+                    <ul class="uk-nav uk-navbar-dropdown-nav">
+
+                        <li><a href="#">Profile</a></li>
+                        <li><a href="#">Calendar</a></li>
+
+                  
+                        <li class="uk-nav-divider"></li>
+                        <li><a (click)="logOut()" class="uk-text-danger" href="#">Logout</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </nav>

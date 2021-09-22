@@ -2,13 +2,15 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from './footer/footer.component';
 import { NavigationComponent } from './navigation/navigation.component';
+import { LeftNavigationComponent } from './left-navigation/left-navigation.component';
 
 
 
 @NgModule({
   declarations: [
     FooterComponent,
-    NavigationComponent
+    NavigationComponent,
+    LeftNavigationComponent
   ],
   imports: [
     CommonModule
@@ -16,7 +18,8 @@ import { NavigationComponent } from './navigation/navigation.component';
 
   exports: [
     FooterComponent,
-    NavigationComponent
+    NavigationComponent,
+    LeftNavigationComponent,
   ]
 })
 export class SharedModule { }
