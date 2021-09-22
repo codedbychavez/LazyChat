@@ -1,3 +1,10 @@
 #top-nav-bar {
-    background-color: #45BFA9;
+    background-color: #F2F2F2;
+    border-bottom: 1px solid whitesmoke;
+
+}
+
+nav .uk-logo {
+    font-family: 'Caveat', serif;
+
 }

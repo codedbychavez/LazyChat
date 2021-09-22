@@ -7,6 +7,7 @@ import { ReservationComponent } from './components/reservation/reservation.compo
 import { ProfileComponent } from './components/profile/profile.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthGuardService } from '../auth/auth-guard.service';
+import { ChatInputComponent } from './components/chat-input/chat-input.component';
 
 
 const routes: Routes = [
@@ -26,7 +27,9 @@ const routes: Routes = [
   declarations: [
     DashboardComponent, 
     ReservationFormComponent, 
-    ReservationComponent, ProfileComponent,
+    ReservationComponent, 
+    ProfileComponent, 
+    ChatInputComponent,
   ],
   imports: [
     CommonModule,

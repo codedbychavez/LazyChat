@@ -1,0 +1,19 @@
+#contacts-heading {
+    color: #2E97F2;
+}
+
+.dot-online {
+    height: 10px;
+    width: 10px;
+    background-color: limegreen;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .dot-offline {
+    height: 10px;
+    width: 10px;
+    background-color: lightgray;
+    border-radius: 50%;
+    display: inline-block;
+  }

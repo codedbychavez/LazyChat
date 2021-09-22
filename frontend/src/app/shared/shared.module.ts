@@ -10,7 +10,7 @@ import { LeftNavigationComponent } from './left-navigation/left-navigation.compo
   declarations: [
     FooterComponent,
     NavigationComponent,
-    LeftNavigationComponent
+    LeftNavigationComponent,
   ],
   imports: [
     CommonModule

@@ -3,7 +3,7 @@
 */
 
 html, body {
-    height:100%;
+
     font-family: 'Montserrat', serif;
 
 }
@@ -105,17 +105,17 @@ html, body {
   bottom: 0;
   overflow-x: hidden;
   overflow-y: auto;
-  background-color: white;
+  background-color: #F2F2F2;
   width: 280px;
-  border-right: 1px solid whitesmoke;
 }
 
 .logo-bar {
   height: 80px;
   width: 280px;
   padding: 0 20px;
-  color: white;
-  background-color: #45BFA9;
+  color: #222c3c;
+  background-color: #F2F2F2;
+  border-bottom: 0.5px solid lightgray;
 }
 .logo-bar .minimised {
   display: none;

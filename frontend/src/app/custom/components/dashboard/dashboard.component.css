@@ -1,0 +1,22 @@
+#messages {
+    background-color: #F2F2F2;
+    overflow-y: scroll;
+    max-height: 0;
+    border-radius: 10px;
+}
+
+#chat-input-component-id {
+    width: 100%;
+}
+
+#send-message-btn {
+    background-color: #2E97F2;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+#chat-message-input {
+    border-radius: 10px;
+}

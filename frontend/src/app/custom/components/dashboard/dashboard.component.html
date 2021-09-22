@@ -2,51 +2,83 @@
 
 <div class="uk-container uk-margin-top">
 
-        <div>
-            <button class="uk-button uk-button-large add-btn" type="button" uk-toggle="target: #modal-sections"> <span uk-icon="icon: plus; ratio: 1"></span>&nbsp; New Person</button>
-        </div>
-    
-            <h3 class="uk-text-light heading-3"><span uk-icon="icon: calendar; ratio: 2"></span>&nbsp;Dashboard</h3>
-    
-            <div class="uk-grid-match uk-child-width-1-3@m" uk-grid>
-                <div>
-                  
-                </div>
-            </div>
-    
+<div class="uk-position-relative">
 
-<!-- Upcoming reservations table -->
-<table class="uk-table uk-table-responsive uk-table-divider">
-    <thead>
-        <tr>
-            <th>Person</th>
-            <th>Time</th>
-            <th>Title</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Table Data</td>
-            <td>Table Data</td>
-            <td>Table Data</td>
-        </tr>
-        <tr>
-            <td>Table Data</td>
-            <td>Table Data</td>
-            <td>Table Data</td>
-        </tr>
-        <tr>
-            <td>Table Data</td>
-            <td>Table Data</td>
-            <td>Table Data</td>
-        </tr>
-    </tbody>
-</table>
+    <main id="messages" class="uk-padding-small" uk-height-viewport="expand: true">
+
+        <ul class="uk-list uk-list-divider">
+            <li>
+                <div class="uk-card uk-padding-small">
+                    <div class="">
+                        <div class="uk-grid-small uk-flex-middle" uk-grid>
+                            <div class="uk-width-expand">
+                                <p class="uk-margin-remove-bottom"><span class="uk-text-bolder">Chavez Harris</span> <span class="uk-text-meta uk-margin-small-left">10:26 AM</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-margin-small-top">
+                        <p class="uk-text-small uk-margin-remove-bottom">Lorem ipsum dolor sit amet.</p>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="uk-card uk-padding-small">
+                    <div class="">
+                        <div class="uk-grid-small uk-flex-middle" uk-grid>
+                            <div class="uk-width-expand">
+                                <p class="uk-margin-remove-bottom"><span class="uk-text-bolder">Suzan Falls</span> <span class="uk-text-meta uk-margin-small-left">10:42 AM</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-margin-small-top">
+                        <p class="uk-text-small uk-margin-remove-bottom">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="uk-card uk-padding-small">
+                    <div class="">
+                        <div class="uk-grid-small uk-flex-middle" uk-grid>
+                            <div class="uk-width-expand">
+                                <p class="uk-margin-remove-bottom"><span class="uk-text-bolder">Chavez Harris</span> <span class="uk-text-meta uk-margin-small-left">10:52 AM</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-margin-small-top">
+                        <p class="uk-text-small uk-margin-remove-bottom">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    
+    
+    </main>
+
+
+        <div class="uk-margin-top uk-inline" id="chat-input-component-id"> 
+            
+            <!-- <input class="uk-input" type="text" placeholder="Input"> -->
+
+                <button id="send-message-btn" class="uk-button-primary uk-form-icon uk-form-icon-flip" href="" uk-icon="icon: chevron-right"></button>
+                <input id="chat-message-input" class="uk-input" type="text" placeholder="Send message">
+            
+        
+        </div>
+
+
+
+    <div>
+
+
+
+
+</div>
 
 </div>
 
 <!-- Reservation form -->
-<app-reservation-form></app-reservation-form>
+<!-- <app-reservation-form></app-reservation-form> -->
+
 
 
 
