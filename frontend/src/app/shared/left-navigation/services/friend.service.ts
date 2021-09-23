@@ -49,7 +49,8 @@ export class FriendService {
     friendObject.name = friend.name;
     friendObject.available = friend.available;
     friendObject.status = friend.status;
-    this.friends.push(friend);
+    friendObject.selected = false;
+    this.friends.push(friendObject);
   });
 
   return this.friends;

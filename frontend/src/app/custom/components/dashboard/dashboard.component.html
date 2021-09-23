@@ -2,9 +2,12 @@
 
 <div class="uk-container uk-margin-top">
 
-<div class="uk-position-relative">
+<div *ngIf="friend; else block" class="uk-position-relative">
+
+    <p class="uk-card uk-text-muted uk-text-bolder">{{ friend?.name }}</p>
 
     <main id="messages" class="uk-padding-small" uk-height-viewport="expand: true">
+
 
         <ul class="uk-list uk-list-divider">
             <li *ngFor="let message of messages">
@@ -49,6 +52,8 @@
 </div>
 
 </div>
+
+<ng-template #block>Select or <a>add a friend</a> to get started.</ng-template>
 
 <!-- Reservation form -->
 <!-- <app-reservation-form></app-reservation-form> -->

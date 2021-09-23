@@ -21,3 +21,8 @@
   .left-nav-friend {
     cursor: pointer;
   }
+
+.active {
+    font-weight: bolder;
+    color: midnightblue;
+}

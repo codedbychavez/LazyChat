@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { MessageService } from './services/message.service';
 import { Message } from './models/message.mode';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,9 +16,17 @@ export class DashboardComponent implements OnInit {
   private messageModel!: Message;
   public messageForm!: FormGroup;
   public messages: any = [];
+  public friend: any;
+  public subscription!: Subscription;
 
   constructor(private authService: AuthService, private messageService: MessageService, private router: Router, public formBuilder: FormBuilder) { 
     this.messageModel = new Message();
+
+    this.messageService.friend.subscribe(
+      (friend) => {
+        this.friend = friend;
+      }
+    )
   }
 
   ngOnInit(): void {

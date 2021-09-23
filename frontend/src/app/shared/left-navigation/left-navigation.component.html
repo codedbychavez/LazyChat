@@ -16,11 +16,13 @@
         </div>
 
     <ul class="uk-list uk-list-divider uk-margin-left uk-margin-top">
-        <li *ngFor="let friend of friends" (click)="setCurrentFriend(friend)" class="uk-text-small left-nav-friend">
-           
+        <li *ngFor="let friend of friends; let i = index"
+            [ngClass]="{'active': friend.selected}"
+            (click)="setCurrentFriend(friend, i)" class="uk-text-small left-nav-friend">
+        
             <div> <span [ngClass]="{ 'dot-online': friend.available == true, 'dot-offline': friend.available == false }" class="uk-margin-small-right"></span><span>{{ friend.name }}</span></div>
             <div class="uk-margin-left"><small class="uk-text-muted">{{ friend.status }}</small></div>
-
+            
         </li>
     </ul>
 </div>
