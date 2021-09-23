@@ -8,11 +8,6 @@ html, body {
 
 }
 
-
-#navbar {
-    background-color: #7aa39a;
-}
-
   .banner {
       background-color: #7aa39a;
       
@@ -20,17 +15,13 @@ html, body {
 
   .banner .title {
       color: whitesmoke;
-      font-family: 'Caveat', serif;
+      /* font-family: 'Caveat', serif; */
   }
 
   .custom-card-title {
     color: whitesmoke;
-    font-family: 'Caveat', serif;
+    /* font-family: 'Caveat', serif; */
 
-  }
-
-  .footer-brand {
-      font-family: 'Caveat', serif;
   }
 
   .heading-3 {
@@ -54,8 +45,6 @@ html, body {
 
   .uk-modal-header .uk-modal-title {
     color: whitesmoke;
-    font-family: 'Caveat', serif;
-
 
   }
 
@@ -107,6 +96,7 @@ html, body {
   overflow-y: auto;
   background-color: #F2F2F2;
   width: 280px;
+  border-right: 1px solid #F2F2F2;
 }
 
 .logo-bar {
@@ -115,7 +105,6 @@ html, body {
   padding: 0 20px;
   color: #222c3c;
   background-color: #F2F2F2;
-  border-bottom: 0.5px solid lightgray;
 }
 .logo-bar .minimised {
   display: none;

@@ -7,48 +7,22 @@
     <main id="messages" class="uk-padding-small" uk-height-viewport="expand: true">
 
         <ul class="uk-list uk-list-divider">
-            <li>
+            <li *ngFor="let message of messages">
                 <div class="uk-card uk-padding-small">
                     <div class="">
                         <div class="uk-grid-small uk-flex-middle" uk-grid>
                             <div class="uk-width-expand">
-                                <p class="uk-margin-remove-bottom"><span class="uk-text-bolder">Chavez Harris</span> <span class="uk-text-meta uk-margin-small-left">10:26 AM</span></p>
+                                <p class="uk-margin-remove-bottom"><span class="uk-text-bolder">{{ message.person_display_name }}</span> <span class="uk-text-meta uk-margin-small-left">{{ message.date_time }}</span></p>
                             </div>
                         </div>
                     </div>
                     <div class="uk-margin-small-top">
-                        <p class="uk-text-small uk-margin-remove-bottom">Lorem ipsum dolor sit amet.</p>
+                        <p class="uk-text-small uk-margin-remove-bottom">{{ message.message }}</p>
                     </div>
                 </div>
             </li>
-            <li>
-                <div class="uk-card uk-padding-small">
-                    <div class="">
-                        <div class="uk-grid-small uk-flex-middle" uk-grid>
-                            <div class="uk-width-expand">
-                                <p class="uk-margin-remove-bottom"><span class="uk-text-bolder">Suzan Falls</span> <span class="uk-text-meta uk-margin-small-left">10:42 AM</span></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="uk-margin-small-top">
-                        <p class="uk-text-small uk-margin-remove-bottom">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="uk-card uk-padding-small">
-                    <div class="">
-                        <div class="uk-grid-small uk-flex-middle" uk-grid>
-                            <div class="uk-width-expand">
-                                <p class="uk-margin-remove-bottom"><span class="uk-text-bolder">Chavez Harris</span> <span class="uk-text-meta uk-margin-small-left">10:52 AM</span></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="uk-margin-small-top">
-                        <p class="uk-text-small uk-margin-remove-bottom">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    </div>
-                </div>
-            </li>
+            
+        
         </ul>
     
     
@@ -58,10 +32,10 @@
         <div class="uk-margin-top uk-inline" id="chat-input-component-id"> 
             
             <!-- <input class="uk-input" type="text" placeholder="Input"> -->
-
-                <button id="send-message-btn" class="uk-button-primary uk-form-icon uk-form-icon-flip" href="" uk-icon="icon: chevron-right"></button>
-                <input id="chat-message-input" class="uk-input" type="text" placeholder="Send message">
-            
+            <form [formGroup]="messageForm" (ngSubmit)="messageFormSubmit()">
+                <button id="send-message-btn" type="submit" class="uk-button-primary uk-form-icon uk-form-icon-flip" href="" uk-icon="icon: chevron-right"></button>
+                <input formControlName="message" id="chat-message-input" class="uk-input" type="text" placeholder="Send message">
+            </form>
         
         </div>
 

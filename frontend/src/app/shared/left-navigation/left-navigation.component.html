@@ -5,7 +5,7 @@
         <div class="uk-grid-collapse uk-child-width-expand@s uk-text-center" uk-grid>
 
             <div>
-                <p id="contacts-heading" class="uk-text-bolder">My Contacts </p>
+                <p id="contacts-heading" class="uk-text-bolder">My Contacts</p>
                 
             </div>
 
@@ -16,9 +16,12 @@
         </div>
 
     <ul class="uk-list uk-list-divider uk-margin-left uk-margin-top">
-        <li class="uk-text-small"><span class="dot-online uk-margin-small-right"></span>Chavez Harris</li>
-        <li class="uk-text-small"><span class="dot-online uk-margin-small-right"></span>Suzan Falls</li>
-        <li class="uk-text-small"><span class="dot-offline uk-margin-small-right"></span>Bradley Johnson</li>
+        <li *ngFor="let friend of friends" (click)="setCurrentFriend(friend)" class="uk-text-small left-nav-friend">
+           
+            <div> <span [ngClass]="{ 'dot-online': friend.available == true, 'dot-offline': friend.available == false }" class="uk-margin-small-right"></span><span>{{ friend.name }}</span></div>
+            <div class="uk-margin-left"><small class="uk-text-muted">{{ friend.status }}</small></div>
+
+        </li>
     </ul>
 </div>
 
