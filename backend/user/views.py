@@ -5,7 +5,7 @@ from rest_framework import status
 
 from django.contrib.auth.models import User
 
-from .models import UserAccount
+from account.models import UserAccount
 
 # Create your views here.
 
