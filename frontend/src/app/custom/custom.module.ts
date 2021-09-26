@@ -5,8 +5,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ReservationFormComponent } from './components/reservation/reservation-form/reservation-form.component';
 import { ReservationComponent } from './components/reservation/reservation.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { LeftNavigationComponent } from './components/left-navigation/left-navigation.component';
-import { NavigationComponent } from './components/navigation/navigation.component';
+import { LeftNavigationComponent } from './components/shared/left-navigation/left-navigation.component';
+import { NavigationComponent } from './components/shared/navigation/navigation.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthGuardService } from '../auth/auth-guard.service';
 

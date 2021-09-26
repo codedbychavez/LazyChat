@@ -6,7 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { CustomModule } from './custom/custom.module';
-import { SharedModule } from './shared/shared.module';
 import { Routes,  RouterModule} from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JwtModule } from "@auth0/angular-jwt";
@@ -39,7 +38,6 @@ const routes: Routes = [
     HttpClientModule,
     CustomModule,
     AuthModule,
-    SharedModule,
     FormsModule,
     ReactiveFormsModule,
     JwtModule,

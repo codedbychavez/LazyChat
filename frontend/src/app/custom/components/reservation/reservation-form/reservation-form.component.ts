@@ -108,7 +108,6 @@ export class ReservationFormComponent implements OnInit {
 }
 
 selectPerson(id: number) {
-  console.log(id)
   this.filteredItems = [];
   // Populate the input field when user clicks on person's name
   const selectedPersonName = this.items.find(x => x.id === id)?.name;

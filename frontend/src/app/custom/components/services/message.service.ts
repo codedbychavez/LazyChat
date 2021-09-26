@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Message } from '../models/message.mode';
 import { Observable, Subject } from 'rxjs';
-import { Friend } from 'src/app/custom/components/left-navigation/models/friend.model';
+import { Friend } from 'src/app/custom/components/models/friend.model';
 
 @Injectable({
   providedIn: 'root'

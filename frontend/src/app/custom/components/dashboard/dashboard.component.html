@@ -7,11 +7,9 @@
 
 <div class="uk-padding">
 
-
-
 <div class="uk-container uk-margin-top">
 
-<div *ngIf="friend; else block" class="uk-position-relative">
+<div *ngIf="friend; else noMessages" class="uk-position-relative">
 
     <p class="uk-card uk-text-muted uk-text-bolder">{{ friend?.name }}</p>
 
@@ -58,7 +56,10 @@
 
 </div>
 
-<ng-template #block>Select or <a>add a friend</a> to get started.</ng-template>
+<ng-template #noMessages>
+    <h1 class="uk-text-lead uk-text-muted uk-text-light">Get lazy. Start a chat</h1>
+    Select or <a>add a friend</a> to get started.
+</ng-template>
 
 
 </div>

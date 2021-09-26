@@ -27,7 +27,6 @@ export class AuthService {
   }
 
   setUser(user: any) {
-    console.log('Setting the user', user);
     this.userSubject.next(user);
   }
 

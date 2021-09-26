@@ -2,10 +2,10 @@ import { Component, ElementRef, OnInit, ViewChild, AfterViewInit } from '@angula
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
-import { MessageService } from './services/message.service';
+import { MessageService } from '../services/message.service';
 
-import { Message } from './models/message.mode';
-import { MessageDisplay } from './models/message-display.mode';
+import { Message } from '../models/message.mode';
+import { MessageDisplay } from '../models/message-display.mode';
 
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -13,7 +13,7 @@ import { environment } from 'src/environments/environment';
 // Socket IO import
 import { io } from 'socket.io-client';
 import { HttpErrorResponse } from '@angular/common/http';
-import { FriendService } from '../left-navigation/services/friend.service';
+import { FriendService } from '../services/friend.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -109,17 +109,23 @@ export class DashboardComponent implements OnInit {
 
   // message received events
     this.socket.on("message_received", (message: any) => {
-      console.log('Message Received')
       this.messages.push(message.data);
+      // Extract the source
+      const source = message.data.user;
+      this.friends?.forEach((friend: any, index: any) => {
+        if(friend.user_id == source) {
+          // Check if the friend is active
+          if(!this.friend) {
+            // Create notification
+            
+          }
+          console.log('the active friend is: ', this.friend)
+          console.log('Lets notify: ', friend);
+        }
+      });
+
+      console.log(message.data);
     });
-
-
-      // message received events
-      // this.socket.on("update_available", (friendToUpdate: any) => {
-      //   console.log(friendToUpdate);
-      //   return friendToUpdate;
-        
-      // })
 
       this.socket.on("update_available", async (friendToUpdate: any) => {
         const available = friendToUpdate.data.available;
@@ -127,6 +133,11 @@ export class DashboardComponent implements OnInit {
         this.updateFriendAvailable(available, friendToUpdateId);
         
       })
+
+      setTimeout(() => {
+
+      }, 2000);
+
 
     } // Closes ngAfterViewInit
 
@@ -161,16 +172,10 @@ export class DashboardComponent implements OnInit {
     // TODO: Save message to backend db
     this.messageService.saveMessage(message).subscribe(
       (savedMessage) => {
-        console.log('Message saved');
-        console.log(savedMessage);
-        console.log('end');
         // Clear the input
         this.clearInput();
         // Append to array
         this.messages.push(savedMessage);
-        // Get user id from friend
-
-        // Emit to socket server
 
 
         this.socket.emit("chat_message", {message: savedMessage, room: this.friend.friend_id});
@@ -189,7 +194,6 @@ export class DashboardComponent implements OnInit {
 
   formatDate(date: Date) {
     let rawDate = date;
-    console.log('Preparing to parse the date')
     let dateTimeToLocaleString = rawDate.toLocaleString();
     return dateTimeToLocaleString
   }

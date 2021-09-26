@@ -26,7 +26,6 @@ export class FriendService {
       this.authService.userIdFromJwt.subscribe(
         (user) => {
           this.user = user;
-          console.log('from friend service', this.user)
         }
       )
       
