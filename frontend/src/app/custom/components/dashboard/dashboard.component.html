@@ -1,3 +1,12 @@
+<app-navigation></app-navigation>
+
+<div class="page-container">
+
+<app-left-navigation></app-left-navigation>
+
+
+<div class="uk-padding">
+
 
 
 <div class="uk-container uk-margin-top">
@@ -7,8 +16,6 @@
     <p class="uk-card uk-text-muted uk-text-bolder">{{ friend?.name }}</p>
 
     <main #messagesMain id="messages" class="uk-padding-small" uk-height-viewport="expand: true">
-
-
         <ul class="uk-list uk-list-divider">
             <li *ngFor="let message of messages; let last = last;">
                 {{last ? scrollToBottom() : ''}}
@@ -16,7 +23,11 @@
                     <div class="">
                         <div class="uk-grid-small uk-flex-middle" uk-grid>
                             <div class="uk-width-expand">
-                                <p class="uk-margin-remove-bottom"><span class="uk-text-bolder">{{ message.person_display_name }}</span> <span class="uk-text-meta uk-margin-small-left">{{ message.date_time }}</span></p>
+                                <p class="uk-margin-remove-bottom">
+                                    <span *ngIf="message.user == user.id; else showFriendName" class="uk-text-bolder">{{ user.full_name }}</span>
+                                    <ng-template #showFriendName><span class="uk-text-bolder">{{ friend.name }}</span></ng-template>
+
+                                    <span class="uk-text-meta uk-margin-small-left">{{ message.date_time }}</span></p>
                             </div>
                         </div>
                     </div>
@@ -25,11 +36,7 @@
                     </div>
                 </div>
             </li>
-            
-        
         </ul>
-    
-    
     </main>
 
 
@@ -47,14 +54,17 @@
 
     <div>
 
-
-
-
 </div>
 
 </div>
 
 <ng-template #block>Select or <a>add a friend</a> to get started.</ng-template>
+
+
+</div>
+</div>
+
+</div>
 
 <!-- Reservation form -->
 <!-- <app-reservation-form></app-reservation-form> -->

@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import * as moment from "moment";
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +14,21 @@ export class AuthService {
   private baseUrl: string;
   private userLoggedIn!: boolean;
   private check: any;
+  userIdFromJwt = new Observable<any>();
+  private user: any;
+
+  private userSubject!: Subject<any>;
 
   constructor(private httpClient: HttpClient, private router: Router) { 
     this.baseUrl = environment.restApi.uri;
+
+    this.userSubject = new Subject<any>();
+    this.userIdFromJwt = this.userSubject.asObservable();
+  }
+
+  setUser(user: any) {
+    console.log('Setting the user', user);
+    this.userSubject.next(user);
   }
 
   checkIfUserLoggedIn(): boolean {
@@ -36,6 +49,7 @@ export class AuthService {
     localStorage.removeItem("expires_at");
     this.router.navigate(['auth']);
     this.userLoggedIn = false;
+    this.userSubject.next(0);
   }
 
   setSession(authResponse:any) {
@@ -49,6 +63,16 @@ export class AuthService {
 
     }
     const decodedToken = this.decodeToken(authResponse.access);
+    // Set userId
+    this.getUser(decodedToken.user_id).subscribe(
+      (user) => {
+        this.setUser(user);
+      }, (err: HttpErrorResponse) => {
+        console.log(err)
+      }
+    )
+    
+    // this.setUser(decodedToken.user_id);
     const token = authResponse.access;
     const expiresAt = moment().add(decodedToken.exp,'second');
     localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
@@ -58,6 +82,12 @@ export class AuthService {
     localStorage.setItem("token", JSON.stringify(token));
     this.router.navigate(['home']);
     this.userLoggedIn = true;
+  }
+
+  getUser(userId: number) {
+    return this.httpClient.post<any>(
+      this.baseUrl + '/user/get_user', {userId}
+    )
   }
 
   getAccessTokenWithRefreshToken() {

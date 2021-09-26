@@ -2,7 +2,7 @@
     background-color: #F2F2F2;
     overflow: scroll;
     max-height: 0;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 #chat-input-component-id {
@@ -13,13 +13,13 @@
     background-color: #2E97F2;
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 
 
 #chat-message-input {
-    border-radius: 10px;
+    border-radius: 5px;
 }
 

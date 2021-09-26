@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  restApi: {uri: 'http://localhost:8000'}
+  restApi: {uri: 'http://localhost:8000'},
+  socketApi: {uri: 'http://0.0.0.0:8080'}
+
 };
 
 

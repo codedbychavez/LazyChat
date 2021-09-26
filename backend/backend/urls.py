@@ -30,6 +30,10 @@ urlpatterns = [
     # paths to apps
     path('user/', include('user.urls')),
     path('validator/', include('validator.urls')),
+    path('account/', include('account.urls')),
+    path('message/', include('message.urls')),
+
+
 
 
 ]

@@ -4,8 +4,6 @@ from .views import *
 urlpatterns = [
 
     # Project paths
-    path('create', create.as_view()),
-    path('get_user', getUser.as_view()),
-
+    path('get_friends', getFriends.as_view()),
 
 ]
