@@ -25,6 +25,7 @@ export class DashboardComponent implements OnInit {
   @ViewChild('messageInput', {static: false}) messageInput!: ElementRef;
 
 
+
   private messageModel!: Message;
   private messageDisplayModel!: MessageDisplay;
   public messageForm!: FormGroup;
@@ -64,8 +65,8 @@ export class DashboardComponent implements OnInit {
     )
 
     this.authService.userIdFromJwt.subscribe(
-      (userId) => {
-        this.user = userId;
+      (user) => {
+        this.user = user;
       }
     )
   }
@@ -116,11 +117,15 @@ export class DashboardComponent implements OnInit {
         if(friend.user_id == source) {
           // Check if the friend is active
           if(!this.friend) {
-            // Create notification
-            
+            this.showNotification(source);
+
+          } else {
+            if(this.friend.user_id != source) {
+              this.showNotification(source);
+
+            }
           }
-          console.log('the active friend is: ', this.friend)
-          console.log('Lets notify: ', friend);
+     
         }
       });
 
@@ -186,6 +191,18 @@ export class DashboardComponent implements OnInit {
     
   }
 
+  deleteMessage(messageId: any, index: number) {
+    this.messages.splice(index, 1);
+    this.messageService.deleteMessage(messageId).subscribe(
+      (resp) => {
+        // continue
+      }, 
+      (err: HttpErrorResponse) => {
+        console.log(err);
+      }
+    )
+  }
+
   scrollToBottom(): void {
     try {
         this.messagesMain.nativeElement.scrollTop = this.messagesMain.nativeElement.scrollHeight;
@@ -204,6 +221,7 @@ export class DashboardComponent implements OnInit {
     this.messageService.getMessages(user, friend).subscribe(
       (messages) => {
         this.messages = messages;
+        console.log(messages);
       },
       (err: HttpErrorResponse) => {
         console.log(err);
@@ -215,6 +233,21 @@ export class DashboardComponent implements OnInit {
 
   clearInput() {
     this.messageInput.nativeElement.value = '';
+  }
+
+
+  showNotification(source: any) {
+      // Create notification
+      const currentValue = (<HTMLSpanElement>document.getElementById(source)).innerText;
+      if(currentValue) {
+        const currentValue = (<HTMLSpanElement>document.getElementById(source)).innerText;
+        const newVal = parseInt(currentValue) + 1;
+        (<HTMLSpanElement>document.getElementById(source)).innerText = newVal.toString();
+        
+      } else {
+        (<HTMLSpanElement>document.getElementById(source)).innerText = '1';
+
+      }
   }
 
 }

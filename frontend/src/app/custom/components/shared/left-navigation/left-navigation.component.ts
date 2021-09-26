@@ -69,7 +69,11 @@ export class LeftNavigationComponent implements OnInit {
 
 
 
-  setCurrentFriend(friend: Friend, index: number) {
+  setCurrentFriend(friend: any, index: number) {
+    // clear badge notification
+    
+    (<HTMLSpanElement>document.getElementById(friend.user_id)).innerText = ''
+
     friend.selected = true;
     this.messageService.setFriend(friend);
 

@@ -104,3 +104,19 @@ class getMessages(APIView):
         #     user_message = 'Error getting messages'
         #     print(user_message)
         #     return Response(user_message, status=status.HTTP_200_OK)
+
+
+@permission_classes([IsAuthenticated])
+class deleteMessages(APIView):
+    def post(self, request, *args, **kargs):
+        print(request.data)
+        try:
+            messageId = request.data['messageId']
+            Message.objects.get(id=messageId).delete()
+            user_message = 'Success deleting message'
+            print(user_message)
+            return Response(user_message, status=status.HTTP_200_OK)
+        except:
+            user_message = 'Error deleting message'
+            print(user_message)
+            return Response(user_message, status=status.HTTP_200_OK)

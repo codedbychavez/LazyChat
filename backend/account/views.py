@@ -42,7 +42,7 @@ class getFriends(APIView):
                     'user_id': userFriend.user.id,
                     'name': userFriend.user.get_full_name(),
                     'available': userFriend.available,
-                    'status': userFriend.status
+                    'status': userFriend.status,
                 }
                 finalListOfFriends.append(friendObject)
 

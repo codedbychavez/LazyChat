@@ -28,6 +28,12 @@ export class MessageService {
      )
    }
 
+   deleteMessage(messageId: any) {
+    return this.httpClient.post<any>(
+      this.baseUrl + '/message/delete_message', {messageId}
+    )
+  }
+
 
 
    getMessages(user: number, friend: number) {

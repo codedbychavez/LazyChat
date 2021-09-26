@@ -15,17 +15,35 @@
 
     <main #messagesMain id="messages" class="uk-padding-small" uk-height-viewport="expand: true">
         <ul class="uk-list uk-list-divider">
-            <li *ngFor="let message of messages; let last = last;">
+            <li *ngFor="let message of messages; let last = last; let i = index">
                 {{last ? scrollToBottom() : ''}}
                 <div class="uk-card uk-padding-small" [ngClass]="{'uk-margin-bottom': last === last}">
                     <div class="">
                         <div class="uk-grid-small uk-flex-middle" uk-grid>
                             <div class="uk-width-expand">
-                                <p class="uk-margin-remove-bottom">
+                                <div class="uk-margin-remove-bottom">
                                     <span *ngIf="message.user == user.id; else showFriendName" class="uk-text-bolder">{{ user.full_name }}</span>
                                     <ng-template #showFriendName><span class="uk-text-bolder">{{ friend.name }}</span></ng-template>
 
-                                    <span class="uk-text-meta uk-margin-small-left">{{ message.date_time }}</span></p>
+                                    <span class="uk-text-meta uk-margin-small-left">{{ message.date_time }}</span>
+
+                                    <!-- Message actions -->
+                                    
+                                    <span *ngIf="user.account.friend_id != message.person">
+                                        <a class="uk-margin-small-left" type="button"><span uk-icon="more"></span></a>
+                                        <div class="messageActionDropDown uk-padding-small" uk-dropdown>
+                                            <ul class="uk-nav uk-dropdown-nav">
+                                                
+                                                <li><a (click)="deleteMessage(message.id, i)"><span class="uk-margin-small-right" uk-icon="icon: trash; ratio: 1"></span>
+                                                    Delete</a></li>
+                                                
+
+                                            </ul>
+                                        </div>
+                                    </span>
+                                
+                                
+                                </div>
                             </div>
                         </div>
                     </div>
