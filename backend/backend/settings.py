@@ -50,7 +50,6 @@ INSTALLED_APPS = [
     'user',
     'account',
     'message',
-    'reservation',
 ]
 
 MIDDLEWARE = [

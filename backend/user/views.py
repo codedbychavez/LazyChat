@@ -27,7 +27,6 @@ class create(APIView):
                 userAccount = UserAccount.objects.create(user=user, accountType=accountType)
                 userAccount.save()
             pass
-            # Create user account
 
             user_message = 'Success creating user'
             print(user_message)
@@ -41,29 +40,28 @@ class getUser(APIView):
    
     def post(self, request, *args, **kwargs):
         print(request.data)
-        # try:
-        userId = request.data['userId']
-        user = User.objects.get(id=userId)
-        userAccount = UserAccount.objects.get(user=user)
-        userObject = {
-            'id': user.id,
-            'full_name': user.get_full_name(),
-            'account': {
-                'friend_id': userAccount.id,
-                'user': userAccount.user.id,
-                'friends': userAccount.friends,
-                'available': userAccount.available,
-                'status': userAccount.status
+        try:
+            userId = request.data['userId']
+            user = User.objects.get(id=userId)
+            userAccount = UserAccount.objects.get(user=user)
+            userObject = {
+                'id': user.id,
+                'full_name': user.get_full_name(),
+                'account': {
+                    'friend_id': userAccount.id,
+                    'user': userAccount.user.id,
+                    'friends': userAccount.friends,
+                    'available': userAccount.available,
+                    'status': userAccount.status
+                }
             }
-        }
-        # Respond with user account
 
-        user_message = 'Success getting user'
-        print(user_message)
-        return Response(userObject, status=status.HTTP_200_OK)
-        # except:
-        #     user_message = 'Error getting user'
-        #     return Response(user_message, status=status.HTTP_400_BAD_REQUEST)
+            user_message = 'Success getting user'
+            print(user_message)
+            return Response(userObject, status=status.HTTP_200_OK)
+        except:
+            user_message = 'Error getting user'
+            return Response(user_message, status=status.HTTP_400_BAD_REQUEST)
 
 
 # Helper functions
