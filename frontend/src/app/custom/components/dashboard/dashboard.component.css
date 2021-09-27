@@ -27,3 +27,17 @@
     border-radius: 5px !important;
 }
 
+#selectPersonList {
+
+}
+
+#selectPersonList:hover{
+    cursor: pointer;
+    color: #3EB489;
+}
+
+/* f */
+#personListCard {
+    overflow:scroll
+}
+

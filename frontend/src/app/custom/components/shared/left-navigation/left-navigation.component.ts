@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, Renderer2, ViewChild, AfterViewInit } fr
 import { Friend } from '../../models/friend.model';
 import { FriendService } from '../../services/friend.service';
 import { MessageService } from 'src/app/custom/components/services/message.service';
-import { HttpParams } from '@angular/common/http';
+import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
@@ -67,6 +67,23 @@ export class LeftNavigationComponent implements OnInit {
   }
   
 
+  deleteFriend(friendId: any, index: any) {
+    const data = {
+      'user_account': this.user.account.friend_id,
+      'person_account': friendId,
+    }
+    console.log(data)
+    this.friends.splice(index, 1);
+    this.friendService.deleteFriend(data).subscribe(
+      (resp) => {
+        // continue
+      }, 
+      (err: HttpErrorResponse) => {
+        console.log(err);
+      }
+    )
+
+  }
 
 
   setCurrentFriend(friend: any, index: number) {

@@ -6,6 +6,7 @@ import { MessageService } from '../services/message.service';
 
 import { Message } from '../models/message.mode';
 import { MessageDisplay } from '../models/message-display.mode';
+import { AddFriend } from '../models/add-friend.model';
 
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -23,7 +24,7 @@ import { FriendService } from '../services/friend.service';
 export class DashboardComponent implements OnInit {
   @ViewChild('messagesMain', {static: false}) messagesMain!: ElementRef;
   @ViewChild('messageInput', {static: false}) messageInput!: ElementRef;
-
+  @ViewChild("personInput", { static: true }) personInput!: ElementRef;
 
 
   private messageModel!: Message;
@@ -37,6 +38,13 @@ export class DashboardComponent implements OnInit {
   private baseUrlSocket!: string;
   private socket!: any;
 
+  filteredItems: any;
+
+  friendsArray: any[] = [];
+
+  public addFriendForm!: FormGroup;
+  addFriendModel = new AddFriend();
+
   constructor(
     private authService: AuthService, 
     private messageService: MessageService, 
@@ -46,6 +54,8 @@ export class DashboardComponent implements OnInit {
     ) { 
     this.messageModel = new Message();
     this.messageDisplayModel = new MessageDisplay();
+    this.addFriendModel = new AddFriend();
+
     this.baseUrlSocket = environment.socketApi.uri;
     this.socket = io(this.baseUrlSocket);
 
@@ -74,6 +84,8 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
 
     this.initializeMessageForm();
+    this.initializeAddFriendform();
+
 
     if (!this.authService.isAuthenticated()) {
       this.router.navigate(['/auth']);
@@ -191,6 +203,30 @@ export class DashboardComponent implements OnInit {
     
   }
 
+  initializeAddFriendform(): void {
+    this.addFriendForm = this.formBuilder.group({
+      person_account: [this.addFriendModel.person_account, Validators.required],
+    });
+  }
+
+  addFriendFormSubmit() {
+
+    const data = this.addFriendForm.getRawValue();
+    console.log(this.user);
+    data.user_account = this.user.account.friend_id;
+    this.friendService.addFriend(data).subscribe(
+      (resp) => {
+
+      }, 
+      (err: HttpErrorResponse) => {
+        
+      }
+    )
+}
+  
+
+
+
   deleteMessage(messageId: any, index: number) {
     this.messages.splice(index, 1);
     this.messageService.deleteMessage(messageId).subscribe(
@@ -221,14 +257,12 @@ export class DashboardComponent implements OnInit {
     this.messageService.getMessages(user, friend).subscribe(
       (messages) => {
         this.messages = messages;
-        console.log(messages);
       },
       (err: HttpErrorResponse) => {
         console.log(err);
       }
     )
 
-    // this.messages = this.messageService.getMessages();
   }
 
   clearInput() {
@@ -249,5 +283,53 @@ export class DashboardComponent implements OnInit {
 
       }
   }
+
+
+
+// Helper functions for friend form
+selectPerson(id: number) {
+  this.filteredItems = [];
+  // Populate the input field when user clicks on person's name
+  const selectedPersonName = this.friendsArray.find(x => x.id === id)?.name;
+  const selectedPersonId = this.friendsArray.find(x => x.id === id)?.friend_id;
+
+  this.personInput.nativeElement.value = selectedPersonName;
+  this.addFriendForm.patchValue({
+    person_account: selectedPersonId,
+  });
+
+  this.addFriendForm.setErrors(null);
+
+}
+
+
+assignCopy(){
+  this.filteredItems = Object.assign([], this.friendsArray);
+}
+
+filterItem(value: any){
+  if(!value){
+      this.assignCopy();
+      this.addFriendForm.controls['person_account'].setErrors({'required': true});
+  } // when nothing has typed
+  // TODO: Call API Get user accounts
+  this.friendService.searchFriends(value).subscribe(
+    (results) => {
+      this.friendsArray = results;
+
+      this.filteredItems = Object.assign([], this.friendsArray).filter(
+        (item: { email: string; }) => item.email.toLowerCase().indexOf(value.toLowerCase()) > -1
+      )
+    
+      if(value.length <= 1) {
+        this.filteredItems = [];
+      }
+    }, 
+    (err: HttpErrorResponse) => {
+      console.log(err)
+    }
+  )
+}
+
 
 }
