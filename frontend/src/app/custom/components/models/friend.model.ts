@@ -4,4 +4,5 @@ export class Friend {
     available!: boolean;
     status!: string;
     selected!: boolean;
+  person_account: any;
 }

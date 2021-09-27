@@ -1,0 +1,42 @@
+<nav id="top-nav-bar" class="uk-navbar-container" uk-sticky>
+    <div uk-navbar>
+      <div class="uk-navbar-left">
+        <div class="uk-logo logo-bar uk-navbar-item">
+          <span class="fullsize">LazyChat</span>
+          <span class="minimised">LazyChat</span>
+        </div>
+    
+
+        <a id="side-nav-toggle" href="#" class="uk-navbar-toggle" uk-navbar-toggle-icon uk-toggle="target: body; cls: sidebar-collapse"></a>
+      </div>
+
+      <div class="uk-navbar-center">
+        <ul class="uk-navbar-nav">
+            <li>
+              <div class="">
+                  <input id="searchFriendsInput" class="uk-input uk-form-width-large" type="text" placeholder="Input">
+              </div>
+            </li>
+        </ul>
+      </div>
+
+      <div class="uk-navbar-right">
+        <ul class="uk-navbar-nav">
+            <li>
+                <a href="#"><span id="account-icon" uk-icon="icon: user; ratio: 1.2"></span></a>
+                <div class="uk-navbar-dropdown">
+                    <ul class="uk-nav uk-navbar-dropdown-nav">
+
+                        <li><a class="uk-disabled" href="#">Profile</a></li>
+                        <li><a class="uk-disabled" href="#">Account</a></li>
+
+                  
+                        <li class="uk-nav-divider"></li>
+                        <li><a (click)="logOut()" class="uk-text-danger" href="#">Logout</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </nav>

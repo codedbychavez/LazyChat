@@ -9,18 +9,18 @@ html, body {
 }
 
   .banner {
-      background-color: #7aa39a;
+      background-color: #0439D9;
       
   }
 
-  .banner .title {
+  .title {
       color: whitesmoke;
       /* font-family: 'Caveat', serif; */
   }
 
   .custom-card-title {
     color: whitesmoke;
-    /* font-family: 'Caveat', serif; */
+    font-family: 'Caveat', serif;
 
   }
 
@@ -59,7 +59,7 @@ html, body {
 }
 
   .add-btn {
-      background-color: #3EB489;
+      background-color: #044BD9;
       color: whitesmoke;
       border-radius: 5px;
   }
@@ -103,8 +103,8 @@ html, body {
   height: 80px;
   width: 280px;
   padding: 0 20px;
-  color: #222c3c;
-  background-color: #F2F2F2;
+  color: whitesmoke;
+  background-color: #0439D9;
 }
 .logo-bar .minimised {
   display: none;

@@ -26,7 +26,6 @@ export class FriendService {
       this.authService.userIdFromJwt.subscribe(
         (user) => {
           this.user = user;
-          console.log('from friend service', this.user)
         }
       )
       
@@ -42,6 +41,24 @@ getFriends(userId: number) {
         this.baseUrl + '/account/get_friends', {userId}
     )
   }
+
+  addFriend(friendRequest: any) {
+    return this.httpClient.post<any>(
+        this.baseUrl + '/account/add_friend', friendRequest
+    )
+  }
+
+  deleteFriend(data: any) {
+    return this.httpClient.post<any>(
+        this.baseUrl + '/account/delete_friend', data
+    )
+  }
+
+searchFriends(searchTerm: string) {
+  return this.httpClient.post<any>(
+    this.baseUrl + '/account/search_friends', {searchTerm}
+)
+}
 
 //  Helper functions
 sortByAvailable(array: any) {

@@ -1,6 +1,8 @@
 #contacts-heading {
-    color: #2E97F2;
+    color: #0D7AD9;
 }
+
+/* Friend status */
 
 .dot-online {
     height: 10px;
@@ -24,5 +26,20 @@
 
 .active {
     font-weight: bolder;
-    color: midnightblue;
+}
+
+.notification:not(:empty) {
+  box-sizing: border-box;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 500px;
+  vertical-align: middle;
+  background: #1e87f0;
+  color: #fff !important;
+  font-size: 11px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 0;
 }

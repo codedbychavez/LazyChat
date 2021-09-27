@@ -1,3 +1,5 @@
+/* Messages */
+
 #messages {
     background-color: #F2F2F2;
     overflow: scroll;
@@ -5,21 +7,42 @@
     border-radius: 5px;
 }
 
+.messageActionDropDown {
+    border-radius: 5px !important;
+}
+
+
+/* Message input */
+
 #chat-input-component-id {
     width: 100%;
 }
 
 #send-message-btn {
-    background-color: #2E97F2;
+    background-color: #044BD9;
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }
 
-
-
 #chat-message-input {
     border-radius: 5px;
 }
 
+/* Add friend modal */
+
+#selectPersonList:hover{
+    cursor: pointer;
+    color: #3EB489;
+}
+
+#personListCard {
+    overflow:scroll
+}
+
+/* Friend display */
+
+#selected-friend-display-name {
+    color: #0D7AD9;
+}

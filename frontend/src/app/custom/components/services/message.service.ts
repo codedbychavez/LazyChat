@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Message } from '../models/message.mode';
 import { Observable, Subject } from 'rxjs';
-import { Friend } from 'src/app/custom/components/left-navigation/models/friend.model';
+import { Friend } from 'src/app/custom/components/models/friend.model';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +27,12 @@ export class MessageService {
        this.baseUrl + '/message/save_message', message
      )
    }
+
+   deleteMessage(messageId: any) {
+    return this.httpClient.post<any>(
+      this.baseUrl + '/message/delete_message', {messageId}
+    )
+  }
 
 
 

@@ -57,10 +57,8 @@ export class SignupFormComponent implements OnInit {
 
   signupFormSubmit() {
     const data = this.signupForm.getRawValue();
-    console.log(data);
     this.signupService.signupUser(data).subscribe(
       (signupUserResponse) => {
-        console.log(signupUserResponse);
         this.showLoginTab();
       },
       (err: HttpErrorResponse) => {

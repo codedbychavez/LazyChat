@@ -20,10 +20,7 @@ export function emailExistValidator(): ValidatorFn {
     
         let emailTaken = emailExist(value).subscribe(
             (result) => {
-                console.log(result);
-                
-
-
+               
             }
         )
 
