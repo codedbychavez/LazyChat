@@ -1,9 +1,9 @@
 #navbar {
-    background-color: #7aa39a;
+    background-color: #0439D9;
 }
 
 #top-nav-bar {
-    background-color: #F2F2F2;
+    background-color: #0439D9;
     border-bottom: 1px solid whitesmoke;
 
 }
@@ -11,4 +11,17 @@
 nav .uk-logo {
     font-family: 'Caveat', serif;
 
+}
+
+nav .uk-logo:hover {
+    color: whitesmoke;
+
+}
+
+nav #side-nav-toggle, nav #account-icon {
+    color: #F2F1DF;
+}
+
+nav #searchFriendsInput {
+    border-radius: 5px;
 }

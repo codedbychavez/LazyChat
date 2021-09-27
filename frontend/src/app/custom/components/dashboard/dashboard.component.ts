@@ -1,20 +1,23 @@
 import { Component, ElementRef, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+// Socket IO import
+import { io } from 'socket.io-client';
+
+import { environment } from 'src/environments/environment';
+// Services
 import { AuthService } from 'src/app/auth/auth.service';
 import { MessageService } from '../services/message.service';
+import { FriendService } from '../services/friend.service';
 
+// Models
 import { Message } from '../models/message.mode';
 import { MessageDisplay } from '../models/message-display.mode';
 import { AddFriend } from '../models/add-friend.model';
 
-import { Subscription } from 'rxjs';
-import { environment } from 'src/environments/environment';
 
-// Socket IO import
-import { io } from 'socket.io-client';
-import { HttpErrorResponse } from '@angular/common/http';
-import { FriendService } from '../services/friend.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -28,7 +31,6 @@ export class DashboardComponent implements OnInit {
 
 
   private messageModel!: Message;
-  private messageDisplayModel!: MessageDisplay;
   public messageForm!: FormGroup;
   public messages: any = [];
   public friend: any;
@@ -53,7 +55,6 @@ export class DashboardComponent implements OnInit {
     public formBuilder: FormBuilder
     ) { 
     this.messageModel = new Message();
-    this.messageDisplayModel = new MessageDisplay();
     this.addFriendModel = new AddFriend();
 
     this.baseUrlSocket = environment.socketApi.uri;
@@ -67,13 +68,11 @@ export class DashboardComponent implements OnInit {
         }
       }
     )
-
     this.friendService.friends$.subscribe(
       (friends) => {
         this.friends = friends;
       }
     )
-
     this.authService.userIdFromJwt.subscribe(
       (user) => {
         this.user = user;
@@ -82,90 +81,61 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.initializeMessageForm();
     this.initializeAddFriendform();
-
 
     if (!this.authService.isAuthenticated()) {
       this.router.navigate(['/auth']);
   }
-
-
   this.formatDate(new Date);
-    
-
   }
 
 
   ngAfterViewInit(): void {
-
     this.socket.on('connect', () => {
       setTimeout(() => {
-        // this.getFriends();
-        // Join a chatroom
         this.socket.emit("join_chatroom", {room: this.user.account.friend_id, account: this.user.account});
-        // Set status
       }, 1000);
     });
 
     this.socket.on('disconnect', () => {
       setTimeout(() => {
-        // this.getFriends();
-        // Join a chatroom
         this.socket.emit("leave_chatroom", {room: this.user.account.friend_id, account: this.user.account});
-
       }, 1000);
     })  
-    
-  // listen for events - Global
 
-  // message received events
+  // Socket events
     this.socket.on("message_received", (message: any) => {
       this.messages.push(message.data);
-      // Extract the source
       const source = message.data.user;
       this.friends?.forEach((friend: any, index: any) => {
         if(friend.user_id == source) {
-          // Check if the friend is active
+
           if(!this.friend) {
             this.showNotification(source);
 
           } else {
             if(this.friend.user_id != source) {
               this.showNotification(source);
-
             }
           }
-     
         }
       });
-
-      console.log(message.data);
     });
 
       this.socket.on("update_available", async (friendToUpdate: any) => {
         const available = friendToUpdate.data.available;
         const friendToUpdateId = friendToUpdate.data.friend_id;
         this.updateFriendAvailable(available, friendToUpdateId);
-        
       })
-
-      setTimeout(() => {
-
-      }, 2000);
-
-
     } // Closes ngAfterViewInit
 
-   
     updateFriendAvailable(available: boolean, idToUpdate: number) {
       this.friends.forEach((friend:any) => {
         if(friend.friend_id == idToUpdate) {
           friend.available = available;
         }
       });
-
       return this.friendService.sortByAvailable(this.friends);
     }
 
@@ -181,26 +151,20 @@ export class DashboardComponent implements OnInit {
 
   messageFormSubmit() {
     const message = this.messageForm.getRawValue();
-
     message.person = this.friend.friend_id;
     message.user = this.user;
     message.date_time = this.formatDate(new Date);
 
-    // TODO: Save message to backend db
     this.messageService.saveMessage(message).subscribe(
       (savedMessage) => {
-        // Clear the input
         this.clearInput();
-        // Append to array
         this.messages.push(savedMessage);
-
-
+        // Emit event
         this.socket.emit("chat_message", {message: savedMessage, room: this.friend.friend_id});
       }, (err: HttpErrorResponse) => {
         console.log(err);
       }
     ) 
-    
   }
 
   initializeAddFriendform(): void {
@@ -210,13 +174,12 @@ export class DashboardComponent implements OnInit {
   }
 
   addFriendFormSubmit() {
-
     const data = this.addFriendForm.getRawValue();
     console.log(this.user);
     data.user_account = this.user.account.friend_id;
     this.friendService.addFriend(data).subscribe(
       (resp) => {
-
+        // TODO: Noftify if friend was added
       }, 
       (err: HttpErrorResponse) => {
         
@@ -224,9 +187,6 @@ export class DashboardComponent implements OnInit {
     )
 }
   
-
-
-
   deleteMessage(messageId: any, index: number) {
     this.messages.splice(index, 1);
     this.messageService.deleteMessage(messageId).subscribe(
@@ -239,6 +199,18 @@ export class DashboardComponent implements OnInit {
     )
   }
 
+  getMessages(user: number, friend: any) {
+    this.messageService.getMessages(user, friend).subscribe(
+      (messages) => {
+        this.messages = messages;
+      },
+      (err: HttpErrorResponse) => {
+        console.log(err);
+      }
+    )
+  }
+
+// Helper functions
   scrollToBottom(): void {
     try {
         this.messagesMain.nativeElement.scrollTop = this.messagesMain.nativeElement.scrollHeight;
@@ -251,45 +223,26 @@ export class DashboardComponent implements OnInit {
     return dateTimeToLocaleString
   }
 
-
-  getMessages(user: number, friend: any) {
-
-    this.messageService.getMessages(user, friend).subscribe(
-      (messages) => {
-        this.messages = messages;
-      },
-      (err: HttpErrorResponse) => {
-        console.log(err);
-      }
-    )
-
-  }
-
   clearInput() {
     this.messageInput.nativeElement.value = '';
   }
 
 
   showNotification(source: any) {
-      // Create notification
+      // Inserts a badge with a counter that increments new messages received
       const currentValue = (<HTMLSpanElement>document.getElementById(source)).innerText;
       if(currentValue) {
         const currentValue = (<HTMLSpanElement>document.getElementById(source)).innerText;
         const newVal = parseInt(currentValue) + 1;
         (<HTMLSpanElement>document.getElementById(source)).innerText = newVal.toString();
-        
       } else {
         (<HTMLSpanElement>document.getElementById(source)).innerText = '1';
-
       }
   }
 
 
-
-// Helper functions for friend form
 selectPerson(id: number) {
   this.filteredItems = [];
-  // Populate the input field when user clicks on person's name
   const selectedPersonName = this.friendsArray.find(x => x.id === id)?.name;
   const selectedPersonId = this.friendsArray.find(x => x.id === id)?.friend_id;
 
@@ -297,11 +250,8 @@ selectPerson(id: number) {
   this.addFriendForm.patchValue({
     person_account: selectedPersonId,
   });
-
   this.addFriendForm.setErrors(null);
-
 }
-
 
 assignCopy(){
   this.filteredItems = Object.assign([], this.friendsArray);
@@ -309,14 +259,14 @@ assignCopy(){
 
 filterItem(value: any){
   if(!value){
+      // when nothing has typed
       this.assignCopy();
       this.addFriendForm.controls['person_account'].setErrors({'required': true});
-  } // when nothing has typed
-  // TODO: Call API Get user accounts
+  } 
+
   this.friendService.searchFriends(value).subscribe(
     (results) => {
       this.friendsArray = results;
-
       this.filteredItems = Object.assign([], this.friendsArray).filter(
         (item: { email: string; }) => item.email.toLowerCase().indexOf(value.toLowerCase()) > -1
       )

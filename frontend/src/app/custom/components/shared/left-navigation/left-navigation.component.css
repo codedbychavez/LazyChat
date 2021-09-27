@@ -1,6 +1,8 @@
 #contacts-heading {
-    color: #2E97F2;
+    color: #0D7AD9;
 }
+
+/* Friend status */
 
 .dot-online {
     height: 10px;
@@ -24,7 +26,6 @@
 
 .active {
     font-weight: bolder;
-    color: midnightblue;
 }
 
 .notification:not(:empty) {

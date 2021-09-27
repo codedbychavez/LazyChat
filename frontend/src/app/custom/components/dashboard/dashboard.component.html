@@ -11,7 +11,7 @@
 
 <div *ngIf="friend; else noMessages" class="uk-position-relative">
 
-    <p class="uk-card uk-text-muted uk-text-bolder">{{ friend?.name }}</p>
+    <p id="selected-friend-display-name" class="uk-card uk-text-light">{{ friend?.name }}</p>
 
     <main #messagesMain id="messages" class="uk-padding-small" uk-height-viewport="expand: true">
         <ul class="uk-list uk-list-divider">
@@ -24,25 +24,19 @@
                                 <div class="uk-margin-remove-bottom">
                                     <span *ngIf="message.user == user.id; else showFriendName" class="uk-text-bolder">{{ user.full_name }}</span>
                                     <ng-template #showFriendName><span class="uk-text-bolder">{{ friend.name }}</span></ng-template>
-
                                     <span class="uk-text-meta uk-margin-small-left">{{ message.date_time }}</span>
 
                                     <!-- Message actions -->
-                                    
                                     <span *ngIf="user.account.friend_id != message.person">
                                         <a class="uk-margin-small-left" type="button"><span uk-icon="more"></span></a>
                                         <div class="messageActionDropDown uk-padding-small" uk-dropdown>
                                             <ul class="uk-nav uk-dropdown-nav">
-                                                
                                                 <li><a (click)="deleteMessage(message.id, i)"><span class="uk-margin-small-right" uk-icon="icon: trash; ratio: 1"></span>
                                                     Delete</a></li>
-                                                
-
                                             </ul>
                                         </div>
                                     </span>
-                                
-                                
+
                                 </div>
                             </div>
                         </div>
@@ -57,20 +51,11 @@
 
 
         <div class="uk-margin-top uk-inline" id="chat-input-component-id"> 
-            
-            <!-- <input class="uk-input" type="text" placeholder="Input"> -->
             <form [formGroup]="messageForm" (ngSubmit)="messageFormSubmit()">
                 <button id="send-message-btn" type="submit" class="uk-button-primary uk-form-icon uk-form-icon-flip" href="" uk-icon="icon: chevron-right"></button>
                 <input #messageInput formControlName="message" id="chat-message-input" class="uk-input" type="text" placeholder="Send message">
             </form>
-        
         </div>
-
-
-
-    <div>
-
-</div>
 
 </div>
 
@@ -95,19 +80,16 @@
             <h2 class="uk-modal-title uk-text-light">New Friend</h2>
         </div>
         <div class="uk-modal-body">
-            <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p> -->
+
             <form [formGroup]="addFriendForm" (ngSubmit)="addFriendFormSubmit()" class="uk-form-horizontal uk-margin-large">
-
-
                 <div class="uk-margin">
                     <label class="uk-form-label" for="form-horizontal-text">Person</label>
                     <div class="uk-form-controls">
                         <input formControlName="person_account" name="person_account" class="uk-input" id="form-horizontal-text" hidden>
-
                         <input class="uk-input" id="form-horizontal-text" #personInput placeholder="Person name..." (input)="filterItem(personInput.value)">
                         <small class="uk-text-danger" *ngIf="addFriendForm.hasError('required', 'person_account')">Person is required.</small>
 
-                        
+                        <!-- Lookup -->
                         <div *ngIf="filteredItems?.length > 0" id="personListCard" class="uk-card uk-card-default uk-card-body uk-padding-small uk-height-max-medium">
                             <div class="uk-card-header uk-padding-remove-left">
                                 <div class="uk-grid-small uk-flex-middle" uk-grid>
@@ -118,17 +100,12 @@
                             </div>
                         <ul class="uk-list uk-list-divider">
                         <li id="selectPersonList" *ngFor="let item of filteredItems" (click)="selectPerson(item.id)">
-                            
-
                             <div class="uk-grid-small" uk-grid>
                                 <div><span class="uk-margin-small-right" uk-icon="user"></span></div>
-
                                 <div>
                                     <div>{{item.name}}</div>
                                     <div><span class="uk-text-meta">{{ item.email }}</span></div>
-                                    
                                 </div>
-
                             </div>
                         </li>
                         </ul>
@@ -136,21 +113,16 @@
                             <small>End of results.</small>
                         </div>
                         </div>
-
                     </div> 
                 </div>
-            
-                
+    
                 <div class="uk-modal-footer uk-text-right">
                     <button type="button" class="uk-button uk-modal-close close-btn uk-margin-small-right">Cancel</button>
                     <button [disabled]="!addFriendForm.valid" id="submitButton" type="submit" class="uk-button add-btn">Save</button>
                 </div>
 
-            
             </form>
-            
         </div>
-        
     </div>
 </div>
 
