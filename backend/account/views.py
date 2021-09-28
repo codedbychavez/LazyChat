@@ -88,11 +88,19 @@ class addFriend(APIView):
             personAccountId = personAccountInstance.id
             userAccountCurrentFriends = userAccountInstance.friends
 
-            if str(personAccountId) not in userAccountCurrentFriends:
-                updatedUserAccountFriends = userAccountCurrentFriends+','+str(personAccountId)
-                UserAccount.objects.filter(id=userAccount).update(friends=updatedUserAccountFriends)
+            # User cannot add themselves as their friends
+            if userAccountInstance.id != personAccountInstance.id: 
+                if str(personAccountId) not in userAccountCurrentFriends:
+                    if len(userAccountCurrentFriends) > 0:
+                        updatedUserAccountFriends = userAccountCurrentFriends+','+str(personAccountId)
+                    else:
+                        updatedUserAccountFriends = str(personAccountId)
+
+                    UserAccount.objects.filter(id=userAccount).update(friends=updatedUserAccountFriends)
+                else:
+                    pass
             else:
-                pass
+                print('Cannot add yourself as your friend')
 
             user_message = 'Success adding friend'
             print(user_message)

@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+declare var UIkit: any;
+
 // Socket IO import
 import { io } from 'socket.io-client';
 
@@ -82,7 +84,6 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeMessageForm();
-    this.initializeAddFriendform();
 
     if (!this.authService.isAuthenticated()) {
       this.router.navigate(['/auth']);
@@ -166,32 +167,12 @@ export class DashboardComponent implements OnInit {
       }
     ) 
   }
-
-  initializeAddFriendform(): void {
-    this.addFriendForm = this.formBuilder.group({
-      person_account: [this.addFriendModel.person_account, Validators.required],
-    });
-  }
-
-  addFriendFormSubmit() {
-    const data = this.addFriendForm.getRawValue();
-    console.log(this.user);
-    data.user_account = this.user.account.friend_id;
-    this.friendService.addFriend(data).subscribe(
-      (resp) => {
-        // TODO: Noftify if friend was added
-      }, 
-      (err: HttpErrorResponse) => {
-        
-      }
-    )
-}
   
   deleteMessage(messageId: any, index: number) {
     this.messages.splice(index, 1);
     this.messageService.deleteMessage(messageId).subscribe(
       (resp) => {
-        // continue
+        this.toggle_user_message('message deleted', 'success')
       }, 
       (err: HttpErrorResponse) => {
         console.log(err);
@@ -241,45 +222,8 @@ export class DashboardComponent implements OnInit {
   }
 
 
-selectPerson(id: number) {
-  this.filteredItems = [];
-  const selectedPersonName = this.friendsArray.find(x => x.id === id)?.name;
-  const selectedPersonId = this.friendsArray.find(x => x.id === id)?.friend_id;
-
-  this.personInput.nativeElement.value = selectedPersonName;
-  this.addFriendForm.patchValue({
-    person_account: selectedPersonId,
-  });
-  this.addFriendForm.setErrors(null);
+toggle_user_message(notificationMessage:string, status: string) {
+  UIkit.notification(notificationMessage, {pos: 'top-right', timeout:5000, status: status});
 }
-
-assignCopy(){
-  this.filteredItems = Object.assign([], this.friendsArray);
-}
-
-filterItem(value: any){
-  if(!value){
-      // when nothing has typed
-      this.assignCopy();
-      this.addFriendForm.controls['person_account'].setErrors({'required': true});
-  } 
-
-  this.friendService.searchFriends(value).subscribe(
-    (results) => {
-      this.friendsArray = results;
-      this.filteredItems = Object.assign([], this.friendsArray).filter(
-        (item: { email: string; }) => item.email.toLowerCase().indexOf(value.toLowerCase()) > -1
-      )
-    
-      if(value.length <= 1) {
-        this.filteredItems = [];
-      }
-    }, 
-    (err: HttpErrorResponse) => {
-      console.log(err)
-    }
-  )
-}
-
 
 }

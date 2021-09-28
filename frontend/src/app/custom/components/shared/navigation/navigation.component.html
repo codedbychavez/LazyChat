@@ -1,36 +1,60 @@
-<nav id="top-nav-bar" class="uk-navbar-container" uk-sticky>
+<nav id="top-nav-bar" class="uk-navbar-container">
     <div uk-navbar>
+
       <div class="uk-navbar-left">
         <div class="uk-logo logo-bar uk-navbar-item">
           <span class="fullsize">LazyChat</span>
           <span class="minimised">LazyChat</span>
         </div>
-    
-
-        <a id="side-nav-toggle" href="#" class="uk-navbar-toggle" uk-navbar-toggle-icon uk-toggle="target: body; cls: sidebar-collapse"></a>
+        <div class="ik-navbar-item">
+          <a id="side-nav-toggle" href="#" class="uk-navbar-toggle" uk-navbar-toggle-icon uk-toggle="target: body; cls: sidebar-collapse"></a>
+  
+        </div>
       </div>
 
-      <div class="uk-navbar-center">
-        <ul class="uk-navbar-nav">
-            <li>
-              <div class="">
-                  <input id="searchFriendsInput" class="uk-input uk-form-width-large" type="text" placeholder="Input">
-              </div>
-            </li>
-        </ul>
+      
+
+      <div class="uk-navbar-center uk-visible@m">
+        <div class="uk-navbar-item">
+          <form [formGroup]="addFriendForm" (ngSubmit)="addFriendFormSubmit()">
+              <input  #personInput id="searchFriendsInput" class="uk-input uk-form-width-large uk-form-small" type="text" placeholder="find friends..." (input)="filterItem(personInput.value)">
+              <button [disabled]="!addFriendForm.valid" id="submitButton" class="uk-button uk-button-small uk-margin-small-left uk-text-capitalize">Add Friend</button>
+
+              <div *ngIf="filteredItems?.length > 0" id="personListCard" class="uk-card uk-card-default uk-card-body uk-padding-small uk-height-max-medium">
+                <div class="uk-card-header uk-padding-remove-left">
+                    <div class="uk-grid-small uk-flex-middle" uk-grid>
+                        <div class="">
+                            <p class="uk-text-meta">Search results are limited to ten. Scroll <span class="uk-margin-right" uk-icon="arrow-down"></span></p>
+                        </div>
+                    </div>
+                </div>
+                <ul class="uk-list uk-list-divider">
+                <li id="selectPersonList" *ngFor="let item of filteredItems" (click)="selectPerson(item.id)">
+                    <div class="uk-grid-small" uk-grid>
+                        <div><span class="uk-margin-small-right" uk-icon="user"></span></div>
+                        <div>
+                            <div>{{item.name}}</div>
+                            <div><span class="uk-text-meta">{{ item.email }}</span></div>
+                        </div>
+                    </div>
+                </li>
+                </ul>
+                <div class="uk-card-footer uk-padding-remove-left uk-text-meta">
+                    <p>End of results.</p>
+                </div>
+                </div>
+          </form>
+      </div>
       </div>
 
       <div class="uk-navbar-right">
         <ul class="uk-navbar-nav">
             <li>
-                <a href="#"><span id="account-icon" uk-icon="icon: user; ratio: 1.2"></span></a>
+                <a mode='click'><span id="account-icon" uk-icon="icon: user; ratio: 1.2"></span></a>
                 <div class="uk-navbar-dropdown">
                     <ul class="uk-nav uk-navbar-dropdown-nav">
-
                         <li><a class="uk-disabled" href="#">Profile</a></li>
                         <li><a class="uk-disabled" href="#">Account</a></li>
-
-                  
                         <li class="uk-nav-divider"></li>
                         <li><a (click)="logOut()" class="uk-text-danger" href="#">Logout</a></li>
                     </ul>
@@ -38,5 +62,6 @@
             </li>
         </ul>
       </div>
+
     </div>
   </nav>

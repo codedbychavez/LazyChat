@@ -1,5 +1,7 @@
 import { Component, ElementRef, OnInit, Renderer2, ViewChild, AfterViewInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+declare var UIkit: any;
+
 // Models
 import { Friend } from '../../models/friend.model';
 // Services
@@ -53,8 +55,11 @@ export class LeftNavigationComponent implements OnInit {
   getFriends() {
     this.friendService.getFriends(this.user.id).subscribe(
       (friends) => {
-        const sortedFriends = this.friendService.sortByAvailable(friends);
-        this.friendService.updateFriends(sortedFriends);
+          const sortedFriends = this.friendService.sortByAvailable(friends);
+          this.friendService.updateFriends(sortedFriends);
+      }, 
+      (err: HttpErrorResponse) => {
+        console.log(err);
       }
     )
   }
@@ -68,7 +73,7 @@ export class LeftNavigationComponent implements OnInit {
     this.friends.splice(index, 1);
     this.friendService.deleteFriend(data).subscribe(
       (resp) => {
-        // TODO: Noftify friend deleted
+        this.toggle_user_message('friend removed', 'success')
       }, 
       (err: HttpErrorResponse) => {
         console.log(err);
@@ -89,6 +94,11 @@ export class LeftNavigationComponent implements OnInit {
         friend.selected = false;
       }
     });
+  }
+
+
+  toggle_user_message(notificationMessage:string, status: string) {
+    UIkit.notification(notificationMessage, {pos: 'top-right', timeout:5000, status: status});
   }
 
 }
