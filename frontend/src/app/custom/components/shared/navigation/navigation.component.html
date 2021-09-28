@@ -17,7 +17,7 @@
       <div class="uk-navbar-center uk-visible@m">
         <div class="uk-navbar-item">
           <form [formGroup]="addFriendForm" (ngSubmit)="addFriendFormSubmit()">
-              <input  #personInput id="searchFriendsInput" class="uk-input uk-form-width-large uk-form-small" type="text" placeholder="find friends..." (input)="filterItem(personInput.value)">
+              <input  #personInput id="searchFriendsInput" class="uk-input uk-form-width-large uk-form-small" type="text" placeholder="find friends by their email address..." (input)="filterItem(personInput.value)">
               <button [disabled]="!addFriendForm.valid" id="submitButton" class="uk-button uk-button-small uk-margin-small-left uk-text-capitalize">Add Friend</button>
 
               <div *ngIf="filteredItems?.length > 0" id="personListCard" class="uk-card uk-card-default uk-card-body uk-padding-small uk-height-max-medium">
