@@ -9,11 +9,11 @@
 
 <div class="uk-container uk-margin-top">
 
-<div *ngIf="friend; else noMessages" class="uk-position-relative">
+<div *ngIf="friend; else noFriend" class="uk-position-relative">
 
     <p id="selected-friend-display-name" class="uk-card uk-text-light">{{ friend?.name }}</p>
 
-    <main #messagesMain id="messages" class="uk-padding-small" uk-height-viewport="expand: true">
+    <main *ngIf="messages?.length > 0; else noMessages" #messagesMain id="messages" class="uk-padding-small" uk-height-viewport="expand: true">
         <ul class="uk-list uk-list-divider">
             <li *ngFor="let message of messages; let last = last; let i = index">
                 {{last ? scrollToBottom() : ''}}
@@ -48,6 +48,12 @@
             </li>
         </ul>
     </main>
+    <ng-template #noMessages>
+        <div id="messages" class="uk-padding-small" uk-height-viewport="expand: true">
+            <p class="uk-text-muted">Send a message to start conversation with <strong>{{ friend?.name }}</strong>...</p>
+
+        </div>
+    </ng-template>
 
 
         <div class="uk-margin-top uk-inline" id="chat-input-component-id"> 
@@ -59,7 +65,7 @@
 
 </div>
 
-<ng-template #noMessages>
+<ng-template #noFriend>
     <h3 class="uk-text-muted uk-text-light uk-margin-small-bottom">Get lazy. Start a chat</h3>
     Select or add a friend to get started.
 </ng-template>
