@@ -1,0 +1,42 @@
+version: '3'
+services:
+    backend: &backend
+        build: ./backend
+        container_name: backend
+        command: python manage.py runserver 0.0.0.0:9000
+        restart: always
+        volumes:
+            - ./backend:/backend
+            - ./backend/staticfiles:/var/www/staticfiles
+        ports:
+            - "9000:9000"
+        expose:
+            - 9000
+
+    socket: &socket
+        build: ./socket
+        container_name: socket
+        command: python manage.py runserver_socketio
+        restart: always
+        volumes:
+            - ./socket:/socket
+        ports:
+            - "5000:5000"
+        expose:
+            - 5000
+
+    nginx:
+        build: ./nginx
+        container_name: frontend
+        restart: always
+        volumes:
+            - ./backend/staticfiles:/var/www/staticfiles
+            - ./frontend:/var/www/frontend
+            - ./nginx/lazychat-backend.prod.conf:/etc/nginx/conf.d/lazychat-backend.prod.conf
+            - ./nginx/lazychat-frontend.prod.conf:/etc/nginx/conf.d/lazychat-frontend.prod.conf
+        ports:
+            - "90:90"
+        expose:
+            - 90
+        depends_on:
+            - backend

@@ -55,11 +55,6 @@ export class AuthService {
     if(authResponse.refresh) {
       const refreshToken = authResponse.refresh;
       localStorage.setItem('refresh_token', JSON.stringify(refreshToken));
-      // const decodedRefreshToken = this.decodeToken(authResponse.refresh);
-      // const refreshTokenWillExpAt = new Date(decodedRefreshToken.exp * 1000);
-      // console.log('Refresh token will expire at: ', refreshTokenWillExpAt);
-
-
     }
     const decodedToken = this.decodeToken(authResponse.access);
     // Set userId
@@ -75,9 +70,6 @@ export class AuthService {
     const token = authResponse.access;
     const expiresAt = moment().add(decodedToken.exp,'second');
     localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
-
-    // const tokenWillExpAt = new Date(decodedToken.exp * 1000);
-    // console.log('Token will expire at: ', tokenWillExpAt);
     localStorage.setItem("token", JSON.stringify(token));
     this.router.navigate(['home']);
     this.userLoggedIn = true;
@@ -105,7 +97,7 @@ export class AuthService {
 
 
   public getToken(): any {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     return JSON.parse(token!);
   }
 
@@ -141,7 +133,6 @@ export class AuthService {
     // Hence we flip the below and return thw opposite of the result
     if(!jwtHelper.isTokenExpired(token)) {
       this.getAccessTokenWithRefreshToken();
-      token = this.getToken();
     }
 
     return !jwtHelper.isTokenExpired(token);

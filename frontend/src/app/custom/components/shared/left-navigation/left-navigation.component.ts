@@ -69,7 +69,6 @@ export class LeftNavigationComponent implements OnInit {
       'user_account': this.user.account.friend_id,
       'person_account': friendId,
     }
-    console.log(data)
     this.friends.splice(index, 1);
     this.friendService.deleteFriend(data).subscribe(
       (resp) => {
