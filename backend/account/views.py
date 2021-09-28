@@ -47,7 +47,7 @@ class getFriends(APIView):
         except:
             user_message = 'Error getting friends'
             print(user_message)
-            return Response(user_message, status=status.HTTP_200_OK)
+            return Response(user_message, status=status.HTTP_400_BAD_REQUEST)
 
 
 @permission_classes([IsAuthenticated])
@@ -70,7 +70,7 @@ class searchFriends(APIView):
             return Response(finalListOfUserAccounts, status=status.HTTP_200_OK)
         except:
             user_message = 'Error getting user accounts'
-            return Response(user_message, status=status.HTTP_200_OK)
+            return Response(user_message, status=status.HTTP_400_BAD_REQUEST)
 
 
 
@@ -88,18 +88,26 @@ class addFriend(APIView):
             personAccountId = personAccountInstance.id
             userAccountCurrentFriends = userAccountInstance.friends
 
-            if str(personAccountId) not in userAccountCurrentFriends:
-                updatedUserAccountFriends = userAccountCurrentFriends+','+str(personAccountId)
-                UserAccount.objects.filter(id=userAccount).update(friends=updatedUserAccountFriends)
+            # User cannot add themselves as their friends
+            if userAccountInstance.id != personAccountInstance.id: 
+                if str(personAccountId) not in userAccountCurrentFriends:
+                    if len(userAccountCurrentFriends) > 0:
+                        updatedUserAccountFriends = userAccountCurrentFriends+','+str(personAccountId)
+                    else:
+                        updatedUserAccountFriends = str(personAccountId)
+
+                    UserAccount.objects.filter(id=userAccount).update(friends=updatedUserAccountFriends)
+                else:
+                    pass
             else:
-                pass
+                print('Cannot add yourself as your friend')
 
             user_message = 'Success adding friend'
             print(user_message)
             return Response(user_message, status=status.HTTP_200_OK)
         except:
             user_message = 'Error getting user accounts'
-            return Response(user_message, status=status.HTTP_200_OK)
+            return Response(user_message, status=status.HTTP_400_BAD_REQUEST)
 
 
 @permission_classes([IsAuthenticated])
@@ -134,4 +142,4 @@ class deleteFriend(APIView):
             return Response(user_message, status=status.HTTP_200_OK)
         except:
             user_message = 'Error deleting friend'
-            return Response(user_message, status=status.HTTP_200_OK)
+            return Response(user_message, status=status.HTTP_400_BAD_REQUEST)

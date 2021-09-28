@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 
 @Injectable({
@@ -65,12 +65,6 @@ sortByAvailable(array: any) {
   // sort by boolean
   return array.sort((a:any) => a.available == true ? -1 : a.available == false ? 1 : 0);
 }
-
-
-
-
-
-
 
 
 }

@@ -23,5 +23,18 @@ nav #side-nav-toggle, nav #account-icon {
 }
 
 nav #searchFriendsInput {
-    border-radius: 5px;
+    border-radius: 1px;
 }
+
+#personListCard {
+    position: absolute;
+    /* width: 200px; */
+}
+
+#searchFriendsInput {
+    overflow: hidden;
+}
+
+#selectPersonList {
+    cursor: pointer;
+  }

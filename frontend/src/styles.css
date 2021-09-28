@@ -100,8 +100,8 @@ html, body {
 }
 
 .logo-bar {
-  height: 80px;
-  width: 280px;
+  height: auto;
+  width: auto;
   padding: 0 20px;
   color: whitesmoke;
   background-color: #0439D9;

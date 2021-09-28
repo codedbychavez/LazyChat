@@ -9,11 +9,11 @@
 
 <div class="uk-container uk-margin-top">
 
-<div *ngIf="friend; else noMessages" class="uk-position-relative">
+<div *ngIf="friend; else noFriend" class="uk-position-relative">
 
     <p id="selected-friend-display-name" class="uk-card uk-text-light">{{ friend?.name }}</p>
 
-    <main #messagesMain id="messages" class="uk-padding-small" uk-height-viewport="expand: true">
+    <main *ngIf="messages?.length > 0; else noMessages" #messagesMain id="messages" class="uk-padding-small" uk-height-viewport="expand: true">
         <ul class="uk-list uk-list-divider">
             <li *ngFor="let message of messages; let last = last; let i = index">
                 {{last ? scrollToBottom() : ''}}
@@ -48,6 +48,12 @@
             </li>
         </ul>
     </main>
+    <ng-template #noMessages>
+        <div id="messages" class="uk-padding-small" uk-height-viewport="expand: true">
+            <p class="uk-text-muted">Send a message to start conversation with <strong>{{ friend?.name }}</strong>...</p>
+
+        </div>
+    </ng-template>
 
 
         <div class="uk-margin-top uk-inline" id="chat-input-component-id"> 
@@ -59,9 +65,9 @@
 
 </div>
 
-<ng-template #noMessages>
-    <h1 class="uk-text-lead uk-text-muted uk-text-light">Get lazy. Start a chat</h1>
-    Select or <a>add a friend</a> to get started.
+<ng-template #noFriend>
+    <h3 class="uk-text-muted uk-text-light uk-margin-small-bottom">Get lazy. Start a chat</h3>
+    <p class="uk-text-muted">Select or add a friend to get started.</p>
 </ng-template>
 
 
@@ -70,61 +76,6 @@
 
 </div>
 
-<!-- Add friend modal -->
-
-
-<div id="modal-sections" class="modal" uk-modal>
-    <div class="uk-modal-dialog">
-        <button class="uk-modal-close-default" type="button" uk-close></button>
-        <div class="uk-modal-header">
-            <h2 class="uk-modal-title uk-text-light">New Friend</h2>
-        </div>
-        <div class="uk-modal-body">
-
-            <form [formGroup]="addFriendForm" (ngSubmit)="addFriendFormSubmit()" class="uk-form-horizontal uk-margin-large">
-                <div class="uk-margin">
-                    <label class="uk-form-label" for="form-horizontal-text">Person</label>
-                    <div class="uk-form-controls">
-                        <input formControlName="person_account" name="person_account" class="uk-input" id="form-horizontal-text" hidden>
-                        <input class="uk-input" id="form-horizontal-text" #personInput placeholder="Person name..." (input)="filterItem(personInput.value)">
-                        <small class="uk-text-danger" *ngIf="addFriendForm.hasError('required', 'person_account')">Person is required.</small>
-
-                        <!-- Lookup -->
-                        <div *ngIf="filteredItems?.length > 0" id="personListCard" class="uk-card uk-card-default uk-card-body uk-padding-small uk-height-max-medium">
-                            <div class="uk-card-header uk-padding-remove-left">
-                                <div class="uk-grid-small uk-flex-middle" uk-grid>
-                                    <div class="uk-width-auto">
-                                        <small class="uk-text-info">Search results limited to ten. Scroll </small><span class="uk-margin-right" uk-icon="arrow-down"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        <ul class="uk-list uk-list-divider">
-                        <li id="selectPersonList" *ngFor="let item of filteredItems" (click)="selectPerson(item.id)">
-                            <div class="uk-grid-small" uk-grid>
-                                <div><span class="uk-margin-small-right" uk-icon="user"></span></div>
-                                <div>
-                                    <div>{{item.name}}</div>
-                                    <div><span class="uk-text-meta">{{ item.email }}</span></div>
-                                </div>
-                            </div>
-                        </li>
-                        </ul>
-                        <div class="uk-card-footer uk-padding-remove-left uk-text-meta">
-                            <small>End of results.</small>
-                        </div>
-                        </div>
-                    </div> 
-                </div>
-    
-                <div class="uk-modal-footer uk-text-right">
-                    <button type="button" class="uk-button uk-modal-close close-btn uk-margin-small-right">Cancel</button>
-                    <button [disabled]="!addFriendForm.valid" id="submitButton" type="submit" class="uk-button add-btn">Save</button>
-                </div>
-
-            </form>
-        </div>
-    </div>
-</div>
 
 
 
