@@ -1,4 +1,4 @@
-# LazyChat
+# 💬 LazyChat
 I made this project to demo how we can combine Angular, Python and Socket IO to create a realtime chat application with features such as:
 
 - Online status updates (As on of your friends connect their online status is updated instantly via SocketIO)
